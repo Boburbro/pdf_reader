@@ -1,5 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf_reader/app/theme/app_theme.dart';
 import 'package:pdf_reader/bloc/app_cubit.dart';
 import 'package:pdf_reader/presentation/router.dart';
 
@@ -10,7 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (_) => AppCubit())],
-      child: AppView(),
+      child: const AppView(),
     );
   }
 }
@@ -20,10 +22,18 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PDF Reader',
-      onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: RouteNames.splashRoute,
+    return AdaptiveTheme(
+      light: AppTheme.lightTheme,
+      dark: AppTheme.darkTheme,
+      initial: AdaptiveThemeMode.system,
+      builder: (theme, darkTheme) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'PDF Reader',
+        theme: theme,
+        darkTheme: darkTheme,
+        onGenerateRoute: AppRouter.generateRoute,
+        initialRoute: RouteNames.splashRoute,
+      ),
     );
   }
 }

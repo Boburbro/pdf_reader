@@ -60,7 +60,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   void openedPath() {
-    emit(state.copyWith(selectedPdf: null));
+    emit(state.clearSelected());
   }
 
   @override

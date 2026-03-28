@@ -14,6 +14,11 @@ class AppState extends Equatable {
     selectedPdf: selectedPdf ?? this.selectedPdf,
   );
 
+  AppState clearSelected() => AppState(
+    pdfFiles: pdfFiles,
+    selectedPdf: null,
+  );
+
   @override
   List<Object?> get props => [pdfFiles, selectedPdf];
 }
