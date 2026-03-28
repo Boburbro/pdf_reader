@@ -11,14 +11,19 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   StreamSubscription? _intentSub;
   AppCubit() : super(const AppState(pdfFiles: [])) {
-    _loadLocalPdfFiles();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _loadLocalPdfFiles();
     _handleInitialIntent();
     _listenIncoming();
   }
 
-  void _loadLocalPdfFiles() => SqlService.instance.getAllPdfFiles().then(
-    (e) => emit(state.copyWith(pdfFiles: e)),
-  );
+  Future<void> _loadLocalPdfFiles() async {
+    final e = await SqlService.instance.getAllPdfFiles();
+    emit(state.copyWith(pdfFiles: e));
+  }
 
   void _handleInitialIntent() async {
     final files = await ReceiveSharingIntent.instance.getInitialMedia();
@@ -40,23 +45,32 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  void addPdfFile(String path, String name) {
+  Future<void> addPdfFile(String path, String name) async {
     for (final file in state.pdfFiles) {
       if (file.path == path) {
         emit(state.copyWith(selectedPdf: file));
         return;
       }
     }
-    SqlService.instance
-        .createPdfFile({'path': path, 'name': name})
-        .then((_) => _loadLocalPdfFiles());
-    emit(
-      state.copyWith(
-        selectedPdf: state.pdfFiles.firstWhere(
-          (element) => element.path == path,
-        ),
-      ),
-    );
+    
+    // Double check DB to strongly guarantee no duplicates
+    final currentDbFiles = await SqlService.instance.getAllPdfFiles();
+    try {
+      final existingFile = currentDbFiles.firstWhere((e) => e.path == path);
+      emit(state.copyWith(
+        pdfFiles: currentDbFiles,
+        selectedPdf: existingFile,
+      ));
+      return;
+    } catch (_) {}
+    
+    await SqlService.instance.createPdfFile({'path': path, 'name': name});
+    final files = await SqlService.instance.getAllPdfFiles();
+    
+    emit(state.copyWith(
+      pdfFiles: files,
+      selectedPdf: files.firstWhere((element) => element.path == path),
+    ));
   }
 
   void openedPath() {

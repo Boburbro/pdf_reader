@@ -57,6 +57,14 @@ class PdfCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                subtitle: Text(
+                  path,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                  ),
+                ),
                 trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.primary),
               ),
             ),
