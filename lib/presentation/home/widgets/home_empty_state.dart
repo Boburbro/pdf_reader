@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_reader/app/utils/l10n_extensions.dart';
 import 'package:pdf_reader/app/theme/app_colors.dart';
 
 class HomeEmptyState extends StatelessWidget {
@@ -29,7 +30,7 @@ class HomeEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'No PDF files yet',
+            context.l10n.noPdfFilesYet,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: isDark ? AppColors.darkText : AppColors.lightText,

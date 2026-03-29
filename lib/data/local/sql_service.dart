@@ -7,7 +7,7 @@ class SqlService {
   static final SqlService instance = SqlService._();
 
   static const String _dbName = 'app_database.db';
-  static const int _dbVersion = 1;
+  static const int _dbVersion = 2;
 
   static const String table = 'pdf_file_paths';
 
@@ -29,7 +29,13 @@ class SqlService {
       onCreate: (db, version) async {
         await _createSchema(db);
       },
-      onUpgrade: (db, oldVersion, newVersion) {},
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+            'ALTER TABLE $table ADD COLUMN last_opened_at TEXT;',
+          );
+        }
+      },
     );
   }
 
@@ -37,17 +43,33 @@ class SqlService {
       CREATE TABLE IF NOT EXISTS $table (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         path TEXT NOT NULL,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        last_opened_at TEXT
       );''');
 
-  Future<void> createPdfFile(Map<String, String> data) async {
+  Future<void> createPdfFile(Map<String, dynamic> data) async {
     final db = await database;
     await db.insert(table, data);
+  }
+
+  Future<void> updatePdfFile(PdfFileModel pdfFile) async {
+    final db = await database;
+    await db.update(
+      table,
+      pdfFile.toJson(),
+      where: 'id = ?',
+      whereArgs: [pdfFile.id],
+    );
   }
 
   Future<void> insertPdfFile(PdfFileModel pdfFile) async {
     final db = await database;
     await db.insert(table, pdfFile.toJson());
+  }
+
+  Future<void> deleteAll() async {
+    final db = await database;
+    await db.delete(table);
   }
 
   Future<List<PdfFileModel>> getAllPdfFiles() async {

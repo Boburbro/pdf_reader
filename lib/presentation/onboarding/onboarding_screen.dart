@@ -3,6 +3,7 @@ import 'package:pdf_reader/app/theme/app_colors.dart';
 import 'package:pdf_reader/presentation/onboarding/widgets/onboarding_slide.dart';
 import 'package:pdf_reader/presentation/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pdf_reader/app/utils/l10n_extensions.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,26 +15,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-
-  final List<Map<String, String>> _onboardingData = [
-    {
-      'title': 'No Ads',
-      'description':
-          'Enjoy a seamless reading experience without any interruptions.',
-      'icon': 'block',
-    },
-    {
-      'title': 'Completely Free',
-      'description': 'All premium features are available to you at zero cost.',
-      'icon': 'money_off',
-    },
-    {
-      'title': 'Open Source',
-      'description':
-          'Transparent, secure, and built by the community for the community.',
-      'icon': 'code',
-    },
-  ];
 
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -48,6 +29,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final bgGradient = isDark
         ? AppColors.darkBgGradient
         : AppColors.lightBgGradient;
+    final loc = context.l10n;
+    
+    final List<Map<String, String>> onboardingData = [
+      {
+        'title': loc.onboardingNoAdsTitle,
+        'description': loc.onboardingNoAdsDesc,
+        'icon': 'block',
+      },
+      {
+        'title': loc.onboardingFreeTitle,
+        'description': loc.onboardingFreeDesc,
+        'icon': 'money_off',
+      },
+      {
+        'title': loc.onboardingOpenSourceTitle,
+        'description': loc.onboardingOpenSourceDesc,
+        'icon': 'code',
+      },
+    ];
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(gradient: bgGradient),
@@ -63,9 +64,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       _currentIndex = index;
                     });
                   },
-                  itemCount: _onboardingData.length,
+                  itemCount: onboardingData.length,
                   itemBuilder: (context, index) {
-                    final data = _onboardingData[index];
+                    final data = onboardingData[index];
                     return OnboardingSlide(data: data, isDark: isDark);
                   },
                 ),
@@ -81,7 +82,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Dots indicator
                     Row(
                       children: List.generate(
-                        _onboardingData.length,
+                        onboardingData.length,
                         (index) => AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           margin: const EdgeInsets.only(right: 8),
@@ -99,7 +100,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Next / Start Button
                     FloatingActionButton.extended(
                       onPressed: () {
-                        if (_currentIndex == _onboardingData.length - 1) {
+                        if (_currentIndex == onboardingData.length - 1) {
                           _completeOnboarding();
                         } else {
                           _pageController.nextPage(
@@ -112,13 +113,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       foregroundColor: Colors.white,
                       elevation: 0,
                       label: Text(
-                        _currentIndex == _onboardingData.length - 1
-                            ? 'Get Started'
-                            : 'Next',
+                        _currentIndex == onboardingData.length - 1
+                            ? loc.getStarted
+                            : loc.nextButton,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       icon: Icon(
-                        _currentIndex == _onboardingData.length - 1
+                        _currentIndex == onboardingData.length - 1
                             ? Icons.check
                             : Icons.arrow_forward_rounded,
                       ),

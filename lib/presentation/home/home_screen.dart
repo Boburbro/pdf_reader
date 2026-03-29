@@ -1,8 +1,9 @@
 import 'dart:ui';
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:pdf_reader/app/utils/l10n_extensions.dart';
 import 'package:pdf_reader/app/theme/app_colors.dart';
 import 'package:pdf_reader/bloc/app_cubit.dart';
 import 'package:pdf_reader/presentation/home/widgets/home_empty_state.dart';
@@ -17,15 +18,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _pickPdfFile(BuildContext context) async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+
+      if (result != null && result.files.single.path != null) {
+        final file = result.files.single;
+        if (context.mounted) {
+          context.read<AppCubit>().addPdfFile(file.path!, file.name);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error picking file: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgGradient = isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient;
+    final bgGradient =
+        isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       child: Scaffold(
         extendBodyBehindAppBar: true,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _pickPdfFile(context),
+          backgroundColor: AppColors.primary,
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -38,29 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          title: const Text('PDF Files'),
+          title: Text(context.l10n.pdfFiles),
           actions: [
             IconButton(
-              icon: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                transitionBuilder: (child, anim) => RotationTransition(
-                  turns: child.key == const ValueKey(true)
-                      ? Tween<double>(begin: 1.0, end: 0.75).animate(anim)
-                      : Tween<double>(begin: 0.75, end: 1.0).animate(anim),
-                  child: FadeTransition(opacity: anim, child: child),
-                ),
-                child: Icon(
-                  isDark ? Icons.light_mode : Icons.dark_mode,
-                  key: ValueKey(isDark),
-                ),
-              ),
+              icon: const Icon(Icons.settings),
               onPressed: () {
-                final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-                if (isDarkTheme) {
-                  AdaptiveTheme.of(context).setLight();
-                } else {
-                  AdaptiveTheme.of(context).setDark();
-                }
+                Navigator.pushNamed(context, RouteNames.settingsRoute);
               },
             ),
           ],
@@ -91,7 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: state.pdfFiles.length,
                   itemBuilder: (context, index) {
                     final file = state.pdfFiles[index];
-                    return PdfCard(name: file.name, path: file.path, isDark: isDark);
+                    return PdfCard(
+                      name: file.name,
+                      path: file.path,
+                      lastOpenedAt: file.lastOpenedAt,
+                      isDark: isDark,
+                    );
                   },
                 );
               },

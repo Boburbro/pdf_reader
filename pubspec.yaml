@@ -11,13 +11,20 @@ dependencies:
   equatable: ^2.0.8
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
   flutter_bloc: ^9.1.1
   path: ^1.9.1
   receive_sharing_intent:
     path: third_party/receive_sharing_intent
+  share_plus: ^12.0.1
   shared_preferences: ^2.3.4
   sqflite: ^2.4.2
   syncfusion_flutter_pdfviewer: ^33.1.45
+  url_launcher: ^6.3.2
+  path_provider: ^2.1.5
+  file_picker: ^10.3.10
 
 dev_dependencies:
   flutter_test:
@@ -26,14 +33,13 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: "ic_launcher"
   ios: false
   image_path: "assets/logo.png"
   min_sdk_android: 21
-  adaptive_icon_background: '#ffffff'
-  adaptive_icon_foreground: 'assets/logo.png'
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:

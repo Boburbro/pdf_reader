@@ -1,25 +1,30 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf_reader/app/theme/app_colors.dart';
 import 'package:pdf_reader/bloc/app_cubit.dart';
 
 class PdfCard extends StatelessWidget {
   final String name;
   final String path;
+  final DateTime? lastOpenedAt;
   final bool isDark;
 
   const PdfCard({
     super.key,
     required this.name,
     required this.path,
+    this.lastOpenedAt,
     required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
     final blurColor = isDark ? AppColors.blurDark : AppColors.blurLight;
-    final blurBorder = isDark ? AppColors.blurBorderDark : AppColors.blurBorderLight;
+    final blurBorder = isDark
+        ? AppColors.blurBorderDark
+        : AppColors.blurBorderLight;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -36,8 +41,13 @@ class PdfCard extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 onTap: () {
                   context.read<AppCubit>().addPdfFile(path, name);
                 },
@@ -47,7 +57,10 @@ class PdfCard extends StatelessWidget {
                     color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.picture_as_pdf, color: AppColors.primary),
+                  child: const Icon(
+                    Icons.picture_as_pdf,
+                    color: AppColors.primary,
+                  ),
                 ),
                 title: Text(
                   name,
@@ -58,14 +71,21 @@ class PdfCard extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  path,
+                  lastOpenedAt != null
+                      ? DateFormat('MMM d, yyyy • HH:mm').format(lastOpenedAt!)
+                      : '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                  ),
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.lightTextSecondary,
+                      ),
                 ),
-                trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.primary),
+                trailing: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.primary,
+                ),
               ),
             ),
           ),
