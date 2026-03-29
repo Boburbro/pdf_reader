@@ -124,4 +124,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cacheDescription => 'Clears temporary files and app history.';
+
+  @override
+  String get sharePdfDescription =>
+      'Share a PDF file from your device\nto view it here.';
+
+  @override
+  String get openSourceAndFree => 'Open Source & Free';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get uzbek => 'Uzbek';
+
+  @override
+  String get shareMessage =>
+      'Check out this amazing open source PDF Reader! https://github.com/Boburbro/pdf_reader';
 }

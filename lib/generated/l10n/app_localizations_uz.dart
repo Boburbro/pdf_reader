@@ -119,8 +119,26 @@ class AppLocalizationsUz extends AppLocalizations {
   String get cacheCleared => 'Kesh muvaffaqiyatli tozalandi';
 
   @override
-  String get storageUsage => 'Storage Usage';
+  String get storageUsage => 'Xotiradan foydalanish';
 
   @override
-  String get cacheDescription => 'Clears temporary files and app history.';
+  String get cacheDescription =>
+      'Vaqtinchalik fayllar va ilova tarixini tozalaydi.';
+
+  @override
+  String get sharePdfDescription =>
+      'PDF faylni ko\'rish uchun uni\nqurilmangizdan ulashing.';
+
+  @override
+  String get openSourceAndFree => 'Ochiq kodli va Bepul';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get uzbek => 'O\'zbekcha';
+
+  @override
+  String get shareMessage =>
+      'Ushbu ajoyib ochiq kodli PDF Readerni ko\'ring! https://github.com/Boburbro/pdf_reader';
 }

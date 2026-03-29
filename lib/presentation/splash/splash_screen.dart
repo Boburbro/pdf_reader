@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf_reader/app/theme/app_colors.dart';
 import 'package:pdf_reader/bloc/app_cubit.dart';
 import 'package:pdf_reader/presentation/router.dart';
+import 'package:pdf_reader/app/utils/l10n_extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -114,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        'PDF Reader',
+                        context.l10n.appTitle,
                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark ? AppColors.darkText : AppColors.lightText,
@@ -123,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Open Source & Free',
+                        context.l10n.openSourceAndFree,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w500,

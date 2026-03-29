@@ -30,14 +30,14 @@ class SettingsScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text("English", style: TextStyle(color: textColor)),
+              title: Text(context.l10n.english, style: TextStyle(color: textColor)),
               onTap: () {
                 context.read<AppCubit>().setLocale(const Locale('en'));
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text("O'zbekcha", style: TextStyle(color: textColor)),
+              title: Text(context.l10n.uzbek, style: TextStyle(color: textColor)),
               onTap: () {
                 context.read<AppCubit>().setLocale(const Locale('uz'));
                 Navigator.pop(context);
@@ -182,7 +182,7 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () {
                         // ignore: deprecated_member_use
                         Share.share(
-                            'Check out this amazing open source PDF Reader! https://github.com/Boburbro/pdf_reader');
+                            loc.shareMessage);
                       },
                     ),
                     const SizedBox(height: 12),

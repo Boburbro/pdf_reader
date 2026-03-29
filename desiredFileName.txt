@@ -1,6 +1,1 @@
-{
-  "uz": [
-    "storageUsage",
-    "cacheDescription"
-  ]
-}
+{}

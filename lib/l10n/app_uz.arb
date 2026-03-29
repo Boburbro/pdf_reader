@@ -32,5 +32,12 @@
   "faqFeaturesDesc": "• Juda tez yuklanadigan PDF viewer\n• Chiroyli 'Glassmorphism' dizayn\n• Tungi va kunduzgi rejimlar\n• Ko'p tilli qo'llab-quvvatlash (Ingliz va O'zbek tili)\n• 100% Bepul va Ochiq kodli",
   "support": "Qo'llab-quvvatlash",
   "clearCache": "Keshni tozalash",
-  "cacheCleared": "Kesh muvaffaqiyatli tozalandi"
+  "cacheCleared": "Kesh muvaffaqiyatli tozalandi",
+  "storageUsage": "Xotiradan foydalanish",
+  "cacheDescription": "Vaqtinchalik fayllar va ilova tarixini tozalaydi.",
+  "sharePdfDescription": "PDF faylni ko'rish uchun uni\nqurilmangizdan ulashing.",
+  "openSourceAndFree": "Ochiq kodli va Bepul",
+  "english": "English",
+  "uzbek": "O'zbekcha",
+  "shareMessage": "Ushbu ajoyib ochiq kodli PDF Readerni ko'ring! https://github.com/Boburbro/pdf_reader"
 }

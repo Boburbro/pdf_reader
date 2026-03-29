@@ -313,6 +313,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clears temporary files and app history.'**
   String get cacheDescription;
+
+  /// No description provided for @sharePdfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Share a PDF file from your device\nto view it here.'**
+  String get sharePdfDescription;
+
+  /// No description provided for @openSourceAndFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source & Free'**
+  String get openSourceAndFree;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @uzbek.
+  ///
+  /// In en, this message translates to:
+  /// **'Uzbek'**
+  String get uzbek;
+
+  /// No description provided for @shareMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this amazing open source PDF Reader! https://github.com/Boburbro/pdf_reader'**
+  String get shareMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -38,7 +38,7 @@ class HomeEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Share a PDF file from your device\nto view it here.',
+            context.l10n.sharePdfDescription,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,

@@ -34,5 +34,10 @@
   "clearCache": "Clear Cache",
   "cacheCleared": "Cache cleared successfully",
   "storageUsage": "Storage Usage",
-  "cacheDescription": "Clears temporary files and app history."
+  "cacheDescription": "Clears temporary files and app history.",
+  "sharePdfDescription": "Share a PDF file from your device\nto view it here.",
+  "openSourceAndFree": "Open Source & Free",
+  "english": "English",
+  "uzbek": "Uzbek",
+  "shareMessage": "Check out this amazing open source PDF Reader! https://github.com/Boburbro/pdf_reader"
 }
